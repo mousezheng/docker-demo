@@ -1,0 +1,21 @@
+version: "2.1"
+services:
+    nginx:
+        image: nginx
+        ports:
+            - "8090:80"
+        volumes: 
+            - ./nginx/www:/usr/share/nginx/html
+            - ./nginx/conf:/etc/nginx/conf.d
+            - ./nginx/logs:/var/log/nginx
+        networks:
+            - lnmp-network
+    php:
+        image: bitnami/php-fpm
+        volumes:
+            - ./nginx/www:/www
+        networks:
+            - lnmp-network
+networks: 
+    lnmp-network:
+
