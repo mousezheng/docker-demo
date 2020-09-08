@@ -1,4 +1,4 @@
-name: CI
+name: docker-symfony-demo
 
 on:
   push:
@@ -17,5 +17,5 @@ jobs:
 
       - name: clone toy-store
         run: cd docker-symfony-demo 
-          - .toy-store-deploy.sh
-          - docker-composer up -d
+           && .toy-store-deploy.sh
+           && docker-composer up -d
