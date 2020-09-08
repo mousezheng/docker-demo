@@ -17,5 +17,5 @@ jobs:
 
       - name: clone toy-store
         run: cd docker-symfony-demo 
-           && .toy-store-deploy.sh
+           && sh toy-store-deploy.sh
            && docker-composer up -d
