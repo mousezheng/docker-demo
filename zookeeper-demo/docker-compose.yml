@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+  node1:
+    image: zookeeper:3.4.12
+    container_name: node1
+    ports:
+      - "2181:2181"
+    volumes:
+      - ./cluster/node1/volume/data:/data
+      - ./cluster/node1/volume/datalog:/datalog
+    environment:
+      TZ: "Asia/Shanghai"
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: "server.1=node1:2888:3888 server.2=node2:2888:3888 server.3=node3:2888:3888"
+  node2:
+    image: zookeeper:3.4.12
+    container_name: node2
+    ports:
+      - "2182:2181"
+    volumes:
+      - ./cluster/node2/volume/data:/data
+      - ./cluster/node2/volume/datalog:/datalog
+    environment:
+      TZ: "Asia/Shanghai"
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: "server.1=node1:2888:3888 server.2=node2:2888:3888 server.3=node3:2888:3888"
+  node3:
+    image: zookeeper:3.4.12
+    container_name: node3
+    ports:
+      - "2183:2181"
+    volumes:
+      - ./cluster/node3/volume/data:/data
+      - ./cluster/node3/volume/datalog:/datalog
+    environment:
+      TZ: "Asia/Shanghai"
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: "server.1=node1:2888:3888 server.2=node2:2888:3888 server.3=node3:2888:3888"

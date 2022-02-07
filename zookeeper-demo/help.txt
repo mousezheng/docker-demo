@@ -1,0 +1,43 @@
+zookeeper，zab
+raft，etcd
+
+cassandra，scyllaDB
+
+
+
+
+-- 创建节点文件夹
+mkdir cluster/node1 -p && mkdir cluster/node2 -p && mkdir cluster/node3 -p
+
+-- 机器ip
+machine_ip=10.82.12.95
+
+-- 运行节点1
+docker run -d -p 2181:2181 -p 2887:2888 -p 3887:3888 --name zookeeper_node1 --restart always \
+-v $PWD/cluster/node1/volume/data:/data \
+-v $PWD/cluster/node1/volume/datalog:/datalog \
+-e "TZ=Asia/Shanghai" \
+-e "ZOO_MY_ID=1" \
+-e "ZOO_SERVERS=server.1=0.0.0.0:2888:3888 server.2=$machine_ip:2888:3888 server.3=$machine_ip:2889:3889" \
+zookeeper:3.4.13
+
+-- 运行节点2
+docker run -d -p 2182:2181 -p 2888:2888 -p 3888:3888 --name zookeeper_node2 --restart always \
+-v $PWD/cluster/node2/volume/data:/data \
+-v $PWD/cluster/node2/volume/datalog:/datalog \
+-e "TZ=Asia/Shanghai" \
+-e "ZOO_MY_ID=2" \
+-e "ZOO_SERVERS=server.1=$machine_ip:2887:3887 server.2=0.0.0.0:2888:3888 server.3=$machine_ip:2889:3889" \
+zookeeper:3.4.13
+
+-- 运行节点3
+docker run -d -p 2183:2181 -p 2889:2888 -p 3889:3888 --name zookeeper_node3 --restart always \
+-v $PWD/cluster/node3/volume/data:/data \
+-v $PWD/cluster/node3/volume/datalog:/datalog \
+-e "TZ=Asia/Shanghai" \
+-e "ZOO_MY_ID=3" \
+-e "ZOO_SERVERS=server.1=$machine_ip:2887:3887 server.2=$machine_ip:2888:3888 server.3=0.0.0.0:2888:3888" \
+zookeeper:3.4.13
+
+
+zkCli.sh -server zk1:2181,zk2:2181,zk3:2181
