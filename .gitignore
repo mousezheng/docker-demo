@@ -1,0 +1,2 @@
+/docker-symfony-demo/nginx/www/*
+/docker-symfony-demo/nginx/logs/*
