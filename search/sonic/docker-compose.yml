@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  sonic:
+    image: valeriansaliou/sonic:v1.3.2
+    container_name: sonic
+    ports:
+      - "14911:1491"
+    volumes:
+      - ./config.cfg:/etc/sonic.cfg
+      - ./data/store/:/usr/src/sonic/data/store
